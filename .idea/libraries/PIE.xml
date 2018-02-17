@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="PIE" type="javaScript">
+    <properties>
+      <sourceFilesUrls>
+        <item url="file://$PROJECT_DIR$/../PIE" />
+      </sourceFilesUrls>
+    </properties>
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../PIE" />
+    </CLASSES>
+    <SOURCES />
+  </library>
+</component>
