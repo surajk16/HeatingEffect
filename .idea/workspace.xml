@@ -19,8 +19,8 @@
       <file leaf-file-name="experiment.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/experiment.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="557" column="27" lean-forward="false" selection-start-line="557" selection-start-column="27" selection-end-line="557" selection-end-column="27" />
+            <state relative-caret-position="20">
+              <caret line="565" column="27" lean-forward="false" selection-start-line="565" selection-start-column="27" selection-end-line="565" selection-end-column="27" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -39,16 +39,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>contai</find>
-      <find>addConta</find>
-      <find>addCon</find>
-      <find>negat</find>
-      <find>table</find>
-      <find>wire</find>
-      <find>switc</find>
-      <find>addswit</find>
-      <find>addSwit</find>
-      <find>addVolta</find>
       <find>r</find>
       <find>addSwi</find>
       <find>add</find>
@@ -67,8 +57,18 @@
       <find>water</find>
       <find>start</find>
       <find>gui</find>
-      <find>350</find>
       <find>500</find>
+      <find>rese</find>
+      <find>update</find>
+      <find>wid</find>
+      <find>325</find>
+      <find>stop</find>
+      <find>stopAnima</find>
+      <find>startAni</find>
+      <find>stopAni</find>
+      <find>stopA</find>
+      <find>350</find>
+      <find>400</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -168,12 +168,12 @@
       <workItem from="1518748557117" duration="32350000" />
       <workItem from="1518942463075" duration="8672000" />
       <workItem from="1519283144873" duration="4069000" />
-      <workItem from="1519309209129" duration="11856000" />
+      <workItem from="1519309209129" duration="16029000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="56974000" />
+    <option name="totallyTimeSpent" value="61147000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="50" y="-772" width="1316" height="772" extended-state="6" />
@@ -275,8 +275,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../PIE/PIElibrary.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="0" column="16708" lean-forward="false" selection-start-line="0" selection-start-column="16705" selection-end-line="0" selection-end-column="16708" />
+        <state relative-caret-position="210">
+          <caret line="0" column="46679" lean-forward="false" selection-start-line="0" selection-start-column="46679" selection-end-line="0" selection-end-column="46679" />
           <folding>
             <marker date="1491040218000" expanded="true" signature="8092:8106" ph="..." />
             <marker date="1491040218000" expanded="true" signature="10125:10153" ph="..." />
@@ -302,8 +302,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/experiment.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="557" column="27" lean-forward="false" selection-start-line="557" selection-start-column="27" selection-end-line="557" selection-end-column="27" />
+        <state relative-caret-position="20">
+          <caret line="565" column="27" lean-forward="false" selection-start-line="565" selection-start-column="27" selection-end-line="565" selection-end-column="27" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>

@@ -470,6 +470,7 @@ function addElementsToScene () {
 
 function  startAnimation () {
     flag = 1;
+    temperature = initialTemperature;
     prism1.rotation.z += Math.PI/8;
     prism1.position.y += -0.25;
     prism2.rotation.z += -Math.PI/8;
@@ -481,6 +482,10 @@ function  startAnimation () {
 
 function stopAnimation () {
     flag = 0;
+    PIEchangeDisplayCommand("Temperature : " + temperature + " °C",
+                            "Temperature : " + initialTemperature + " °C",
+                            test);
+    temperature = initialTemperature;
     prism1.rotation.z += -Math.PI/8;
     prism1.position.y += +0.25;
     prism2.rotation.z += +Math.PI/8;
@@ -492,7 +497,7 @@ function  test() {
 }
 
 function voltageChange (volt) {
-    PIEchangeDisplayCommand("Voltage : " + voltage + "V", "Voltage : " + volt + " V", test);
+    PIEchangeDisplayCommand("Voltage : " + voltage + " V", "Voltage : " + volt + " V", test);
     voltage = volt;
 }
 
@@ -518,8 +523,9 @@ function resistanceChange (resistanceValue) {
 }
 
 function temperatureChange (temp) {
-    PIEchangeDisplayCommand("Room temperature : " + initialTemperature + " °C", "Room temperature : " + temp + " °C", test);
-    initialTemperature = temperature = temp;
+    PIEchangeDisplayCommand("Temperature : " + initialTemperature + " °C", "Temperature : " + temp + " °C", test);
+    initialTemperature = temp;
+    temperature = temp;
 }
 
 function loadExperimentElements () {
@@ -545,17 +551,19 @@ function loadExperimentElements () {
 
     var a = "Voltage : " + voltage + " V";
     var b = "Time : " + time + " secs";
-    var c = "Electric energy : " + electricEnergy + " J";
-    var d = "Heat energy : " + heatEnergy + " J";
+    var c = "Electric energy : " + electricEnergy/1000 + " kJ";
+    var d = "Heat energy : " + heatEnergy/1000 + " kJ";
     var e = "Temperature : " + temperature + " °C";
     var f = "Water level : " + waterLevel + " L";
+    var g = "Resistance : " + resistance + " ohm";
     PIEaddDisplayCommand(a, test);
     PIEaddDisplayCommand(f, test);
+    PIEaddDisplayCommand(g, test);
     PIEaddDisplayCommand(b, test);
     PIEaddDisplayCommand(c, test);
     PIEaddDisplayCommand(d, test);
     PIEaddDisplayCommand(e, test);
-    PIEdisplayGUI.width = 350;
+    PIEdisplayGUI.width = 400;
     PIErender();
 }
 
@@ -568,13 +576,15 @@ function  updateExperimentElements () {
         difference = Math.round(difference);
         if (difference !== time) {
             var tempElectricEnergy = voltage*voltage*difference/resistance;
-            PIEchangeDisplayCommand("Time : " + time + " secs", "Time : " + difference + " secs", test);
-            PIEchangeDisplayCommand("Electric energy : " + electricEnergy + " J",
-                                    "Electric energy : " + tempElectricEnergy + " J",
-                                    test);
-            PIEchangeDisplayCommand("Heat energy : " + heatEnergy + " J",
-                                    "Heat energy : " + tempElectricEnergy + " J",
-                                    test);
+            if (tempElectricEnergy !== electricEnergy) {
+                PIEchangeDisplayCommand("Time : " + time + " secs", "Time : " + difference + " secs", test);
+                PIEchangeDisplayCommand("Electric energy : " + electricEnergy/1000 + " kJ",
+                    "Electric energy : " + tempElectricEnergy/1000 + " kJ",
+                    test);
+                PIEchangeDisplayCommand("Heat energy : " + heatEnergy/1000 + " kJ",
+                    "Heat energy : " + tempElectricEnergy/1000 + " kJ",
+                    test);
+            }
             time = difference;
             electricEnergy = tempElectricEnergy;
             heatEnergy = tempElectricEnergy;
@@ -582,22 +592,49 @@ function  updateExperimentElements () {
             var tempDiff = heatEnergy/(waterLevel*1000*4.18);
             var newTemp = initialTemperature + tempDiff;
             newTemp = newTemp.toFixed(2);
-            console.log(newTemp);
+            console.log(temperature, newTemp);
+            /*PIEchangeDisplayCommand("Temperature : " + initialTemperature + " °C",
+                                    "Temperature : " + newTemp + " °C",
+                                    test);*/
             PIEchangeDisplayCommand("Temperature : " + temperature + " °C",
                                     "Temperature : " + newTemp + " °C",
                                     test);
             temperature = newTemp;
-
         }
     }
 }
 
 function resetExperiment() {
 
+    if (flag === 1)
+        stopAnimation();
+
+    PIEchangeDisplayCommand("Voltage : " + voltage + " V",
+                            "Voltage : " + 220 + " V",
+                            test);
+    PIEchangeDisplayCommand("Water level : " + waterLevel + " L",
+                            "Water level : " + 3 + " L",
+                            test);
+    PIEchangeDisplayCommand("Resistance : " + resistance + " ohm",
+                            "Resistance : " + 2 + " ohm",
+                            test);
+    PIEchangeDisplayCommand("Time : " + time + " secs",
+                            "Time : " + 0 + " secs",
+                            test);
+    PIEchangeDisplayCommand("Electric energy : " + electricEnergy/1000 + " kJ",
+                            "Electric energy : " + 0 + " kJ",
+                            test);
+    PIEchangeDisplayCommand("Heat energy : " + heatEnergy + " kJ",
+                            "Heat energy : " + 0 + " kJ",
+                            test);
+    PIEchangeDisplayCommand("Temperature : " + temperature + " °C",
+                            "Temperature : " + 36 + " °C",
+                            test);
     initializeOtherVariables();
-    PIEchangeInputSlider("Voltage: ",4);
+    PIEchangeInputSlider("Voltage: ",220);
     PIEchangeInputSlider("Water level: ",3);
     PIEchangeInputSlider("Resistance: ",2);
     PIEchangeInputSlider("Room temp: ",36);
+
     waterLevelChange(3);
 }
