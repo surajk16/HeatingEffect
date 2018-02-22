@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6fe2fdf9-ab2b-49a6-9ee8-1c1f9acfb4b5" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/experiment.js" afterPath="$PROJECT_DIR$/experiment.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -20,8 +19,8 @@
       <file leaf-file-name="experiment.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/experiment.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="571">
-              <caret line="579" column="24" lean-forward="true" selection-start-line="579" selection-start-column="24" selection-end-line="579" selection-end-column="24" />
+            <state relative-caret-position="221">
+              <caret line="557" column="27" lean-forward="false" selection-start-line="557" selection-start-column="27" selection-end-line="557" selection-end-column="27" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -40,9 +39,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>#</find>
-      <find>thermo</find>
-      <find>therm</find>
       <find>contai</find>
       <find>addConta</find>
       <find>addCon</find>
@@ -68,8 +64,11 @@
       <find>resis</find>
       <find>addW</find>
       <find>C</find>
-      <find>gui</find>
       <find>water</find>
+      <find>start</find>
+      <find>gui</find>
+      <find>350</find>
+      <find>500</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -169,12 +168,12 @@
       <workItem from="1518748557117" duration="32350000" />
       <workItem from="1518942463075" duration="8672000" />
       <workItem from="1519283144873" duration="4069000" />
-      <workItem from="1519309209129" duration="7564000" />
+      <workItem from="1519309209129" duration="11856000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="52682000" />
+    <option name="totallyTimeSpent" value="56974000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="50" y="-772" width="1316" height="772" extended-state="6" />
@@ -277,15 +276,34 @@
     <entry file="file://$PROJECT_DIR$/../PIE/PIElibrary.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="186">
-          <caret line="0" column="1231" lean-forward="false" selection-start-line="0" selection-start-column="1228" selection-end-line="0" selection-end-column="1231" />
-          <folding />
+          <caret line="0" column="16708" lean-forward="false" selection-start-line="0" selection-start-column="16705" selection-end-line="0" selection-end-column="16708" />
+          <folding>
+            <marker date="1491040218000" expanded="true" signature="8092:8106" ph="..." />
+            <marker date="1491040218000" expanded="true" signature="10125:10153" ph="..." />
+            <marker date="1491040218000" expanded="true" signature="10717:10745" ph="..." />
+            <marker date="1491040218000" expanded="true" signature="11092:11120" ph="..." />
+            <marker date="1491040218000" expanded="true" signature="11786:11814" ph="..." />
+            <marker date="1491040218000" expanded="true" signature="12065:12093" ph="..." />
+            <marker date="1491040218000" expanded="true" signature="15205:15211" ph=" " />
+            <marker date="1491040218000" expanded="true" signature="15211:15217" ph=" " />
+            <marker date="1491040218000" expanded="true" signature="15217:15223" ph=" " />
+            <marker date="1491040218000" expanded="true" signature="15223:15229" ph=" " />
+            <marker date="1491040218000" expanded="true" signature="15229:15235" ph=" " />
+            <marker date="1491040218000" expanded="true" signature="15235:15241" ph=" " />
+            <marker date="1491040218000" expanded="true" signature="15260:15266" ph=" " />
+            <marker date="1491040218000" expanded="true" signature="15266:15272" ph=" " />
+            <marker date="1491040218000" expanded="true" signature="15272:15278" ph=" " />
+            <marker date="1491040218000" expanded="true" signature="15278:15284" ph=" " />
+            <marker date="1491040218000" expanded="true" signature="15284:15290" ph=" " />
+            <marker date="1491040218000" expanded="true" signature="15290:15296" ph=" " />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/experiment.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="571">
-          <caret line="579" column="24" lean-forward="true" selection-start-line="579" selection-start-column="24" selection-end-line="579" selection-end-column="24" />
+        <state relative-caret-position="221">
+          <caret line="557" column="27" lean-forward="false" selection-start-line="557" selection-start-column="27" selection-end-line="557" selection-end-column="27" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>

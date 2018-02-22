@@ -13,6 +13,7 @@ var container;
 var resistor;
 var voltageRegulator;
 var water;
+var prism1,prism2;
 
 /* Object geometry variables */
 /* Container */
@@ -26,12 +27,14 @@ var contTLY;
 /* Parameter variables */
 var resistance;
 var voltage;
-var switchOn;
+var flag;
 var temperature;
+var initialTemperature;
 var time;
 var electricEnergy;
 var heatEnergy;
 var waterLevel;
+var startTime;
 
 var controls;
 function startOrbitalControls() {
@@ -81,10 +84,10 @@ function initializeScene () {
 }
 
 function  initializeOtherVariables () {
-    resistance = 20;
-    voltage = 4;
-    switchOn = false;
-    temperature = 36;
+    resistance = 2;
+    voltage = 220;
+    flag = 0;
+    temperature = initialTemperature = 36;
     time = 0;
     electricEnergy = 0;
     heatEnergy = 0;
@@ -96,7 +99,6 @@ function  initializeOtherVariables () {
     contTLY = myCenterY - contHeight/2;
 }
 
-var prism1,prism2,fakeSwitch;
 function addSwitchPrism(x,y,z,ang,color){
     var PrismGeometry = function ( vertices, height ) {
         var Shape = new THREE.Shape();
@@ -178,17 +180,6 @@ function addSwitch(){
     base.position.y += 6;
     PIEaddElement(base);
     addSwitchPrism(0.5,-0.8,-0.3,0,0xff0000);
-
-    /*var cylgeom = new THREE.CylinderGeometry( 0.1, 0.1, 0.5, 32 );
-    cylgeom.translate(1.2,0.5,0);
-    var cylinder1 = new THREE.Mesh( cylgeom, new THREE.MeshBasicMaterial( {color: 0xff0000} ) );
-
-    var cylgeom2 = new THREE.CylinderGeometry( 0.1, 0.1, 0.5, 32 );
-    cylgeom2.translate(-1.2,0.5,0);
-    var cylinder2 = new THREE.Mesh( cylgeom2, new THREE.MeshBasicMaterial( {color: 0x000000} ) );
-
-    base.add(cylinder1);
-    base.add(cylinder2);*/
 }
 function addContainer() {
     var containerGeo = new THREE.BoxGeometry (contWidth, contHeight, contWidth);
@@ -393,9 +384,6 @@ function addTable () {
     tableTop.add(tableleg4);
 }
 
-var objects = [];
-var raycaster= new THREE.Raycaster();
-var mouse = new THREE.Vector2();
 var flag = 0 ;
 function PIEmouseMove( event ) {
     var intersects;     // to hold return array of ray intersects
@@ -486,8 +474,9 @@ function  startAnimation () {
     prism1.position.y += -0.25;
     prism2.rotation.z += -Math.PI/8;
     prism2.position.y += +0.25;
+
+    startTime = new Date();
     PIEstartAnimation();
-    console.log("start animation");
 }
 
 function stopAnimation () {
@@ -503,12 +492,12 @@ function  test() {
 }
 
 function voltageChange (volt) {
-    PIEchangeDisplayCommand("Voltage : " + voltage + "V", "Voltage : " + volt + "V", test);
+    PIEchangeDisplayCommand("Voltage : " + voltage + "V", "Voltage : " + volt + " V", test);
     voltage = volt;
 }
 
 function waterLevelChange (level) {
-    PIEchangeDisplayCommand("Water level : " + waterLevel + " l", "Water level : " + level + " l", test);
+    PIEchangeDisplayCommand("Water level : " + waterLevel + " L", "Water level : " + level + " L", test);
     waterLevel = level;
 
     container.remove(water);
@@ -519,6 +508,8 @@ function waterLevelChange (level) {
     water.add(line);
     water.position.y -= (contHeight - level*contHeight/10)/2;
     container.add(water);
+    PIEremoveElement(container);
+    PIEaddElement(container);
 }
 
 function resistanceChange (resistanceValue) {
@@ -527,8 +518,8 @@ function resistanceChange (resistanceValue) {
 }
 
 function temperatureChange (temp) {
-    PIEchangeDisplayCommand("Room temperature : " + temperature + " °C", "Room temperature : " + temp + " °C", test);
-    temperature = temp;
+    PIEchangeDisplayCommand("Room temperature : " + initialTemperature + " °C", "Room temperature : " + temp + " °C", test);
+    initialTemperature = temperature = temp;
 }
 
 function loadExperimentElements () {
@@ -546,28 +537,59 @@ function loadExperimentElements () {
     document.getElementById("start").addEventListener("click", startAnimation);
     document.getElementById("stop").addEventListener("click", stopAnimation  );
 
-    PIEaddInputSlider("Voltage: ", 4, voltageChange, 1, 10, 1);
+    PIEaddInputSlider("Voltage: ", 220, voltageChange, 100, 400, 10);
     PIEaddInputSlider("Water level: ", 3, waterLevelChange, 2, 9, 1);
-    PIEaddInputSlider("Resistance: ", 20, resistanceChange, 10, 60, 10);
+    PIEaddInputSlider("Resistance: ", 2, resistanceChange, 1, 10, 1);
     PIEaddInputSlider("Room temp: ", 36, temperatureChange, 30, 46, 1);
     PIEinputGUI.width = 280;
 
-    var a = "Voltage : " + voltage + "V";
+    var a = "Voltage : " + voltage + " V";
     var b = "Time : " + time + " secs";
-    var c = "Electric energy : " + electricEnergy + " Joules";
-    var d = "Heat energy : " + heatEnergy + " Joules";
+    var c = "Electric energy : " + electricEnergy + " J";
+    var d = "Heat energy : " + heatEnergy + " J";
     var e = "Temperature : " + temperature + " °C";
+    var f = "Water level : " + waterLevel + " L";
     PIEaddDisplayCommand(a, test);
+    PIEaddDisplayCommand(f, test);
     PIEaddDisplayCommand(b, test);
     PIEaddDisplayCommand(c, test);
     PIEaddDisplayCommand(d, test);
     PIEaddDisplayCommand(e, test);
-    PIEdisplayGUI.width = 270;
+    PIEdisplayGUI.width = 350;
     PIErender();
 }
 
-function  updateExperimentElements () {
 
+function  updateExperimentElements () {
+    var currentTime = new Date();
+    if (flag === 1) {
+        var difference = currentTime.getTime() - startTime.getTime();
+        difference /= 1000;
+        difference = Math.round(difference);
+        if (difference !== time) {
+            var tempElectricEnergy = voltage*voltage*difference/resistance;
+            PIEchangeDisplayCommand("Time : " + time + " secs", "Time : " + difference + " secs", test);
+            PIEchangeDisplayCommand("Electric energy : " + electricEnergy + " J",
+                                    "Electric energy : " + tempElectricEnergy + " J",
+                                    test);
+            PIEchangeDisplayCommand("Heat energy : " + heatEnergy + " J",
+                                    "Heat energy : " + tempElectricEnergy + " J",
+                                    test);
+            time = difference;
+            electricEnergy = tempElectricEnergy;
+            heatEnergy = tempElectricEnergy;
+
+            var tempDiff = heatEnergy/(waterLevel*1000*4.18);
+            var newTemp = initialTemperature + tempDiff;
+            newTemp = newTemp.toFixed(2);
+            console.log(newTemp);
+            PIEchangeDisplayCommand("Temperature : " + temperature + " °C",
+                                    "Temperature : " + newTemp + " °C",
+                                    test);
+            temperature = newTemp;
+
+        }
+    }
 }
 
 function resetExperiment() {
@@ -575,7 +597,7 @@ function resetExperiment() {
     initializeOtherVariables();
     PIEchangeInputSlider("Voltage: ",4);
     PIEchangeInputSlider("Water level: ",3);
-    PIEchangeInputSlider("Resistance: ",20);
+    PIEchangeInputSlider("Resistance: ",2);
     PIEchangeInputSlider("Room temp: ",36);
     waterLevelChange(3);
 }
