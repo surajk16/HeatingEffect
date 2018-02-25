@@ -13,7 +13,9 @@ var container;
 var resistor;
 var voltageRegulator;
 var water;
+var whiteThermo, redThermo;
 var prism1,prism2;
+var steamLevel1, steamLevel2, steamLevel3;
 
 /* Object geometry variables */
 /* Container */
@@ -35,6 +37,7 @@ var electricEnergy;
 var heatEnergy;
 var waterLevel;
 var startTime;
+var counter;
 
 var controls;
 function startOrbitalControls() {
@@ -92,6 +95,10 @@ function  initializeOtherVariables () {
     electricEnergy = 0;
     heatEnergy = 0;
     waterLevel = 3;
+    counter = 0;
+    steamLevel1 = [];
+    steamLevel2 = [];
+    steamLevel3 = [];
 
     contWidth = mySceneW/6;
     contHeight = mySceneH/3;
@@ -258,8 +265,86 @@ function addWires () {
     mesh6.position.z += 8;
     mesh6.position.x += 3.7;
     PIEaddElement(mesh6);
+}
 
+function  addSteamLevel1 () {
+    var steam = new THREE.CubicBezierCurve3(
+        new THREE.Vector3(1.14, 2.81, 0),
+        new THREE.Vector3(1.86, 3.3, 0),
+        new THREE.Vector3(0.66, 3.16, 0),
+        new THREE.Vector3(1.4, 3.73, 0)
+    );
+    var tube = new THREE.TubeGeometry(steam, 40, 0.05, 20, false);
 
+    for (var i=0; i<7; i++) {
+        steamLevel1[i] = new THREE.Mesh(tube, new THREE.MeshBasicMaterial({color: "#404040"}));
+        steamLevel1[i].position.x -= i*0.8;
+        container.add(steamLevel1[i]);
+    }
+
+    for (var j=0; j<5; j++)
+        container.remove(steamLevel2[j]);
+    for (var k=0; k<3; k++)
+        container.remove(steamLevel3[k]);
+}
+
+function  addSteamLevel2 () {
+    var steam = new THREE.CubicBezierCurve3(
+        new THREE.Vector3(1.14, 2.81, 0),
+        new THREE.Vector3(1.86, 3.3, 0),
+        new THREE.Vector3(0.66, 3.16, 0),
+        new THREE.Vector3(1.4, 3.73, 0)
+    );
+    var tube = new THREE.TubeGeometry(steam, 40, 0.05, 20, false);
+
+    for (var j=0; j<5; j++) {
+        steamLevel2[j] = new THREE.Mesh(tube, new THREE.MeshBasicMaterial({color: "#404040"}));
+        steamLevel2[j].position.x -= j + 0.4;
+        steamLevel2[j].position.y += 1.2;
+        container.add(steamLevel2[j])
+    }
+
+    for (var i=0; i<7; i++)
+        container.remove(steamLevel1[i]);
+    for (var k=0; k<3; k++)
+        container.remove(steamLevel3[k]);
+}
+
+function addSteamLevel3 () {
+    var steam = new THREE.CubicBezierCurve3(
+        new THREE.Vector3(1.14, 2.81, 0),
+        new THREE.Vector3(1.86, 3.3, 0),
+        new THREE.Vector3(0.66, 3.16, 0),
+        new THREE.Vector3(1.4, 3.73, 0)
+    );
+    var tube = new THREE.TubeGeometry(steam, 40, 0.05, 20, false);
+
+    for (var k=0; k<3; k++) {
+        steamLevel3[k] = new THREE.Mesh(tube, new THREE.MeshBasicMaterial({color: "#404040"}));
+        steamLevel3[k].position.x -= k*1.2 + 1;
+        steamLevel3[k].position.y += 2.4;
+        container.add(steamLevel3[k])
+    }
+
+    for (var i=0; i<7; i++)
+        container.remove(steamLevel1[i]);
+    for (var j=0; j<5; j++)
+        container.remove(steamLevel2[j]);
+}
+
+function removeSteamLevel1 () {
+    for (var i=0; i<7; i++)
+        container.remove(steamLevel1[i]);
+}
+
+function removeSteamLevel2 () {
+    for (var j=0; j<5; j++)
+        container.remove(steamLevel2[j]);
+}
+
+function removeSteamLevel3 () {
+    for (var k=0; k<3; k++)
+        container.remove(steamLevel3[k]);
 }
 
 function addVoltageSupply() {
@@ -308,23 +393,19 @@ function addResistor () {
 
 function  addThermometer() {
     var whiteThermoGeo = new THREE.CylinderGeometry(0.08, 0.08, 5.2, 32);
-    var whiteThermo = new THREE.Mesh(whiteThermoGeo, new THREE.MeshBasicMaterial({color: "#ffffff"}));
+    whiteThermo = new THREE.Mesh(whiteThermoGeo, new THREE.MeshBasicMaterial({color: "#ffffff"}));
     whiteThermo.position.z += 8;
     whiteThermo.position.y += 6.2;
     whiteThermo.position.x += 3.5;
     whiteThermo.rotation.x -= Math.PI/6;
     whiteThermo.rotation.y += Math.PI/6;
 
-    var redThermoGeo = new THREE.CylinderGeometry(0.04, 0.04, 5.2, 32);
-    var redThermo = new THREE.Mesh(redThermoGeo, new THREE.MeshBasicMaterial({color: "#af0b13"}));
-    redThermo.rotation.x -= Math.PI/6;
-    redThermo.rotation.y += Math.PI/6;
-    redThermo.position.x += 3.49;
-    redThermo.position.y += 6.2;
-    redThermo.position.z += 8.05;
-
+    var redThermoGeo = new THREE.CylinderGeometry(0.09, 0.09, 1.87, 32);
+    redThermo = new THREE.Mesh(redThermoGeo, new THREE.MeshBasicMaterial({color: "#af0b13"}));
+    redThermo.position.y -= (5.2 - 1.87)/2;
+    whiteThermo.add(redThermo);
     PIEaddElement(whiteThermo);
-    PIEaddElement(redThermo);
+
 }
 
 function addTable () {
@@ -384,7 +465,6 @@ function addTable () {
     tableTop.add(tableleg4);
 }
 
-var flag = 0 ;
 function PIEmouseMove( event ) {
     var intersects;     // to hold return array of ray intersects
 
@@ -470,6 +550,7 @@ function addElementsToScene () {
 
 function  startAnimation () {
     flag = 1;
+    counter = 0;
     temperature = initialTemperature;
     prism1.rotation.z += Math.PI/8;
     prism1.position.y += -0.25;
@@ -490,6 +571,13 @@ function stopAnimation () {
     prism1.position.y += +0.25;
     prism2.rotation.z += +Math.PI/8;
     prism2.position.y += -0.25;
+    temperatureChange(temperature);
+
+    removeSteamLevel1();
+    removeSteamLevel2();
+    removeSteamLevel3();
+
+    PIEstartAnimation();
     PIEstopAnimation();
 }
 
@@ -513,8 +601,9 @@ function waterLevelChange (level) {
     water.add(line);
     water.position.y -= (contHeight - level*contHeight/10)/2;
     container.add(water);
-    PIEremoveElement(container);
-    PIEaddElement(container);
+
+    PIEstartAnimation();
+    PIEstopAnimation();
 }
 
 function resistanceChange (resistanceValue) {
@@ -526,6 +615,31 @@ function temperatureChange (temp) {
     PIEchangeDisplayCommand("Temperature : " + initialTemperature + " °C", "Temperature : " + temp + " °C", test);
     initialTemperature = temp;
     temperature = temp;
+    tempLevelChange(temp);
+
+    PIEstartAnimation();
+    PIEstopAnimation();
+}
+
+function  tempLevelChange (temp) {
+    var redHeight = temp*5.2/100;
+    var redThermoGeo;
+    if (redHeight < 5.2) {
+        whiteThermo.remove(redThermo);
+        redThermoGeo = new THREE.CylinderGeometry(0.09, 0.09, redHeight, 32);
+        redThermo = new THREE.Mesh (redThermoGeo, new THREE.MeshBasicMaterial({color: "#af0b13"} ));
+        redThermo.position.y -= (5.2 - redHeight)/2;
+        whiteThermo.add(redThermo);
+        PIEremoveElement(whiteThermo);
+        PIEaddElement(whiteThermo);
+    } else {
+        whiteThermo.remove(redThermo);
+        redThermoGeo = new THREE.CylinderGeometry(0.09, 0.09, 5.2, 32);
+        redThermo = new THREE.Mesh (redThermoGeo, new THREE.MeshBasicMaterial({color: "#af0b13"} ));
+        whiteThermo.add(redThermo);
+        PIEremoveElement(whiteThermo);
+        PIEaddElement(whiteThermo);
+    }
 }
 
 function loadExperimentElements () {
@@ -563,7 +677,7 @@ function loadExperimentElements () {
     PIEaddDisplayCommand(c, test);
     PIEaddDisplayCommand(d, test);
     PIEaddDisplayCommand(e, test);
-    PIEdisplayGUI.width = 400;
+    PIEdisplayGUI.width = 350;
     PIErender();
 }
 
@@ -576,30 +690,49 @@ function  updateExperimentElements () {
         difference = Math.round(difference);
         if (difference !== time) {
             var tempElectricEnergy = voltage*voltage*difference/resistance;
+            tempElectricEnergy /= 1000;
+            tempElectricEnergy = tempElectricEnergy.toFixed(2);
             if (tempElectricEnergy !== electricEnergy) {
                 PIEchangeDisplayCommand("Time : " + time + " secs", "Time : " + difference + " secs", test);
-                PIEchangeDisplayCommand("Electric energy : " + electricEnergy/1000 + " kJ",
-                    "Electric energy : " + tempElectricEnergy/1000 + " kJ",
+                PIEchangeDisplayCommand("Electric energy : " + electricEnergy + " kJ",
+                    "Electric energy : " + tempElectricEnergy + " kJ",
                     test);
-                PIEchangeDisplayCommand("Heat energy : " + heatEnergy/1000 + " kJ",
-                    "Heat energy : " + tempElectricEnergy/1000 + " kJ",
+                PIEchangeDisplayCommand("Heat energy : " + heatEnergy + " kJ",
+                    "Heat energy : " + tempElectricEnergy + " kJ",
                     test);
             }
             time = difference;
             electricEnergy = tempElectricEnergy;
             heatEnergy = tempElectricEnergy;
 
-            var tempDiff = heatEnergy/(waterLevel*1000*4.18);
+            var tempDiff = heatEnergy*1000/(waterLevel*1000*4.18);
             var newTemp = initialTemperature + tempDiff;
             newTemp = newTemp.toFixed(2);
-            console.log(temperature, newTemp);
-            /*PIEchangeDisplayCommand("Temperature : " + initialTemperature + " °C",
-                                    "Temperature : " + newTemp + " °C",
-                                    test);*/
+            tempLevelChange(newTemp);
             PIEchangeDisplayCommand("Temperature : " + temperature + " °C",
                                     "Temperature : " + newTemp + " °C",
                                     test);
             temperature = newTemp;
+
+            if (temperature <= 45 ) {
+                if (counter%2 === 0)
+                    addSteamLevel1();
+                else
+                    removeSteamLevel1();
+            } else if (temperature <= 60) {
+                if (counter%2 === 0)
+                    addSteamLevel1();
+                else
+                    addSteamLevel2();
+            } else {
+                if (counter%3 === 0)
+                    addSteamLevel1();
+                else if (counter%3 === 1)
+                    addSteamLevel2();
+                else
+                    addSteamLevel3();
+            }
+            counter++;
         }
     }
 }
@@ -637,4 +770,6 @@ function resetExperiment() {
     PIEchangeInputSlider("Room temp: ",36);
 
     waterLevelChange(3);
+    tempLevelChange(36);
+
 }
