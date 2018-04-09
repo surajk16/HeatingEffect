@@ -288,6 +288,7 @@ function  addSteamLevel1 () {
         container.remove(steamLevel2[j]);
     for (var k=0; k<3; k++)
         container.remove(steamLevel3[k]);
+
 }
 
 function  addSteamLevel2 () {
@@ -310,6 +311,7 @@ function  addSteamLevel2 () {
         container.remove(steamLevel1[i]);
     for (var k=0; k<3; k++)
         container.remove(steamLevel3[k]);
+
 }
 
 function addSteamLevel3 () {
@@ -332,6 +334,7 @@ function addSteamLevel3 () {
         container.remove(steamLevel1[i]);
     for (var j=0; j<5; j++)
         container.remove(steamLevel2[j]);
+
 }
 
 function removeSteamLevel1 () {
@@ -555,6 +558,7 @@ function  startAnimation () {
     flag = 1;
     counter = 0;
     temperature = initialTemperature;
+    waterLevel = initialWaterLevel;
     prism1.rotation.z += Math.PI/8;
     prism1.position.y += -0.25;
     prism2.rotation.z += -Math.PI/8;
@@ -570,12 +574,17 @@ function stopAnimation () {
     PIEchangeDisplayCommand("Temperature : " + temperature + " °C",
                             "Temperature : " + initialTemperature + " °C",
                             test);
+    PIEchangeDisplayCommand("Water level : " + waterLevel + " L",
+        "Water level : " + initialWaterLevel + " L",
+        test);
+    waterLevel = initialWaterLevel;
     temperature = initialTemperature;
     prism1.rotation.z += -Math.PI/8;
     prism1.position.y += +0.25;
     prism2.rotation.z += +Math.PI/8;
     prism2.position.y += -0.25;
     temperatureChange(temperature);
+    initialWaterLevelChange(initialWaterLevel);
 
     removeSteamLevel1();
     removeSteamLevel2();
@@ -595,7 +604,7 @@ function voltageChange (volt) {
 
 function initialWaterLevelChange (level) {
     PIEchangeDisplayCommand("Water level : " + waterLevel + " L", "Water level : " + level + " L", test);
-    waterLevel = level;
+    initialWaterLevel = waterLevel = level;
 
     container.remove(water);
     var waterGeo = new THREE.BoxGeometry (contWidth+0.05, level*contHeight/10, contWidth+0.1);
@@ -611,8 +620,9 @@ function initialWaterLevelChange (level) {
 }
 
 function waterLevelChange (level) {
-    PIEchangeDisplayCommand("Water level : " + waterLevel + " L", "Water level : " + level + " L", test);
-    waterLevel = level;
+    var displayLevel = level.toFixed(2);
+    PIEchangeDisplayCommand("Water level : " + waterLevel + " L", "Water level : " + displayLevel + " L", test);
+    waterLevel = level.toFixed(2);
 
     container.remove(water);
     var waterGeo = new THREE.BoxGeometry (contWidth+0.05, level*contHeight/10, contWidth+0.1);
@@ -622,8 +632,6 @@ function waterLevelChange (level) {
     water.add(line);
     water.position.y -= (contHeight - level*contHeight/10)/2;
     container.add(water);
-    PIEpauseAnimation();
-    PIEresumeAnimation();
 }
 
 function resistanceChange (resistanceValue) {
@@ -668,6 +676,8 @@ function initializeInfo () {
     infoContent = infoContent + "<p>When the circuit is closed, the resistor in the circuit produces electrical energy. This energy" +
         " is converted into heat energy and it is radiated in the water. Due to this heat energy being radiated in the water, " +
         " the temperature of the water rises.</p>";
+    infoContent = infoContent + "<p>Since the boiling point of water is 100 °C, the temperature never rises beyond it. Instead," +
+        " the water gets converted into steam after it reaches the boiling point and the water level starts falling.</p>";
     infoContent = infoContent + "<h3>Formulas</h3>";
     infoContent = infoContent + "<p>Electrical energy = V²/R Joules</p>";
     infoContent = infoContent + "<p>Heat energy = Electric energy (By law of conservation of energy)</p>";
@@ -689,8 +699,8 @@ function initializeHelp () {
     helpContent = helpContent + "<p>The animation can be started either using the start button or the switch" +
         " on the voltage regulator.</p>";
     helpContent = helpContent + "<p>After the animation has started, the panel on the top right provides information about the" +
-        " current state of the experiment such as the time elapsed, the current energy and heat energy produced and the current" +
-        " temperature. It also shows the info of the values set initially such as the voltage, water level and resistance.</p>";
+        " current state of the experiment such as the time elapsed, the electrical energy, heat energy produced, the current" +
+        " temperature and the current water level. It also shows the info of the values set initially such as the voltage and resistance.</p>";
     PIEupdateHelp(helpContent);
 }
 
@@ -711,7 +721,7 @@ function loadExperimentElements () {
     document.getElementById("stop").addEventListener("click", stopAnimation  );
     PIEaddInputSlider("Voltage: ", 220, voltageChange, 100, 400, 10);
     PIEaddInputSlider("Water level: ", 3, initialWaterLevelChange, 2, 9, 1);
-    PIEaddInputSlider("Resistance: ", 2, resistanceChange, 1, 10, 1);
+    PIEaddInputSlider("Resistance: ", 3, resistanceChange, 2, 10, 1);
     PIEaddInputSlider("Room temp: ", 36, temperatureChange, 30, 46, 1);
     PIEinputGUI.width = 280;
 
@@ -729,7 +739,7 @@ function loadExperimentElements () {
     PIEaddDisplayCommand(c, test);
     PIEaddDisplayCommand(d, test);
     PIEaddDisplayCommand(e, test);
-    PIEdisplayGUI.width = 365;
+    PIEdisplayGUI.width = 370;
     PIErender();
 }
 
@@ -783,17 +793,22 @@ function  updateExperimentElements () {
                 else
                     removeSteamLevel1();
             } else if (temperature <= 60) {
-                if (counter%2 === 0)
+                if (counter%2 === 0) {
                     addSteamLevel1();
-                else
+                }
+                else {
                     addSteamLevel2();
+                }
             } else {
-                if (counter%3 === 0)
+                if (counter%3 === 0) {
                     addSteamLevel1();
-                else if (counter%3 === 1)
+                }
+                else if (counter%3 === 1) {
                     addSteamLevel2();
-                else
+                }
+                else {
                     addSteamLevel3();
+                }
             }
             counter++;
         }
@@ -804,6 +819,10 @@ function resetExperiment() {
 
     if (flag === 1)
         stopAnimation();
+
+    removeSteamLevel1();
+    removeSteamLevel2();
+    removeSteamLevel3();
 
     PIEchangeDisplayCommand("Voltage : " + voltage + " V",
                             "Voltage : " + 220 + " V",
