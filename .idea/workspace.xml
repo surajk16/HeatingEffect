@@ -20,11 +20,21 @@
       <file leaf-file-name="experiment.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/experiment.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="196">
-              <caret line="721" column="39" lean-forward="false" selection-start-line="721" selection-start-column="39" selection-end-line="721" selection-end-column="39" />
+            <state relative-caret-position="14200">
+              <caret line="710" column="79" lean-forward="false" selection-start-line="710" selection-start-column="79" selection-end-line="710" selection-end-column="79" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="237">
+              <caret line="20" column="57" lean-forward="false" selection-start-line="20" selection-start-column="57" selection-end-line="20" selection-end-column="57" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -40,25 +50,10 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>C</find>
-      <find>start</find>
-      <find>gui</find>
-      <find>500</find>
-      <find>rese</find>
-      <find>wid</find>
-      <find>325</find>
-      <find>stop</find>
-      <find>stopAnima</find>
-      <find>startAni</find>
-      <find>stopAni</find>
-      <find>stopA</find>
-      <find>350</find>
       <find>400</find>
       <find>gui.wid</find>
       <find>contain</find>
       <find>container</find>
-      <find>thermo</find>
-      <find>waterLevel</find>
       <find>var redThermoGeo = new THREE.CylinderGeometry(0.09, 0.09, 1.87, 32);</find>
       <find>thermome</find>
       <find>addTher</find>
@@ -70,6 +65,21 @@
       <find>addStem</find>
       <find>water</find>
       <find>load</find>
+      <find>thermo</find>
+      <find>Thermo</find>
+      <find>1000</find>
+      <find>display</find>
+      <find>Electric</find>
+      <find>voltage</find>
+      <find>thermom</find>
+      <find>tempera</find>
+      <find>change</find>
+      <find>width</find>
+      <find>start</find>
+      <find>temperatureCha</find>
+      <find>waterLe</find>
+      <find>waterLevel</find>
+      <find>tempe</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -98,7 +108,7 @@
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="49" />
-    <option name="y" value="-782" />
+    <option name="y" value="-14" />
     <option name="width" value="1318" />
     <option name="height" value="783" />
   </component>
@@ -117,7 +127,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -129,7 +139,7 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -170,33 +180,35 @@
       <workItem from="1518942463075" duration="8672000" />
       <workItem from="1519283144873" duration="4069000" />
       <workItem from="1519309209129" duration="16351000" />
-      <workItem from="1519535085157" duration="8246000" />
+      <workItem from="1519535085157" duration="14237000" />
+      <workItem from="1520615489947" duration="634000" />
+      <workItem from="1523244137682" duration="3343000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="69715000" />
+    <option name="totallyTimeSpent" value="79683000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="49" y="-782" width="1318" height="783" extended-state="6" />
+    <frame x="49" y="-14" width="1318" height="783" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24924012" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3288889" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3287879" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -253,14 +265,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Lemon_Milk_Regular.js" />
-    <entry file="file://$PROJECT_DIR$/index.html">
+    <entry file="file://$PROJECT_DIR$/experiment.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="27" column="48" lean-forward="false" selection-start-line="27" selection-start-column="48" selection-end-line="27" selection-end-column="48" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/experiment.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Lemon_Milk_Regular.js" />
     <entry file="file://$PROJECT_DIR$/models/thermo.obj" />
     <entry file="file://$PROJECT_DIR$/../PIE/three.js">
       <provider selected="true" editor-type-id="text-editor">
@@ -280,6 +305,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-591">
           <caret line="140" column="9" lean-forward="false" selection-start-line="140" selection-start-column="9" selection-end-line="140" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="237">
+          <caret line="20" column="57" lean-forward="false" selection-start-line="20" selection-start-column="57" selection-end-line="20" selection-end-column="57" />
           <folding />
         </state>
       </provider>
@@ -287,34 +319,15 @@
     <entry file="file://$PROJECT_DIR$/../PIE/PIElibrary.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="205">
-          <caret line="0" column="46679" lean-forward="false" selection-start-line="0" selection-start-column="46679" selection-end-line="0" selection-end-column="46679" />
-          <folding>
-            <marker date="1491040218000" expanded="true" signature="8092:8106" ph="..." />
-            <marker date="1491040218000" expanded="true" signature="10125:10153" ph="..." />
-            <marker date="1491040218000" expanded="true" signature="10717:10745" ph="..." />
-            <marker date="1491040218000" expanded="true" signature="11092:11120" ph="..." />
-            <marker date="1491040218000" expanded="true" signature="11786:11814" ph="..." />
-            <marker date="1491040218000" expanded="true" signature="12065:12093" ph="..." />
-            <marker date="1491040218000" expanded="true" signature="15205:15211" ph=" " />
-            <marker date="1491040218000" expanded="true" signature="15211:15217" ph=" " />
-            <marker date="1491040218000" expanded="true" signature="15217:15223" ph=" " />
-            <marker date="1491040218000" expanded="true" signature="15223:15229" ph=" " />
-            <marker date="1491040218000" expanded="true" signature="15229:15235" ph=" " />
-            <marker date="1491040218000" expanded="true" signature="15235:15241" ph=" " />
-            <marker date="1491040218000" expanded="true" signature="15260:15266" ph=" " />
-            <marker date="1491040218000" expanded="true" signature="15266:15272" ph=" " />
-            <marker date="1491040218000" expanded="true" signature="15272:15278" ph=" " />
-            <marker date="1491040218000" expanded="true" signature="15278:15284" ph=" " />
-            <marker date="1491040218000" expanded="true" signature="15284:15290" ph=" " />
-            <marker date="1491040218000" expanded="true" signature="15290:15296" ph=" " />
-          </folding>
+          <caret line="0" column="41882" lean-forward="false" selection-start-line="0" selection-start-column="41882" selection-end-line="0" selection-end-column="41882" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/experiment.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="196">
-          <caret line="721" column="39" lean-forward="false" selection-start-line="721" selection-start-column="39" selection-end-line="721" selection-end-column="39" />
+        <state relative-caret-position="14200">
+          <caret line="710" column="79" lean-forward="false" selection-start-line="710" selection-start-column="79" selection-end-line="710" selection-end-column="79" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>

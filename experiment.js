@@ -36,8 +36,10 @@ var time;
 var electricEnergy;
 var heatEnergy;
 var waterLevel;
+var initialWaterLevel;
 var startTime;
 var counter;
+var thresholdEnergy;
 
 var controls;
 function startOrbitalControls() {
@@ -94,7 +96,7 @@ function  initializeOtherVariables () {
     time = 0;
     electricEnergy = 0;
     heatEnergy = 0;
-    waterLevel = 3;
+    waterLevel = initialWaterLevel = 3;
     counter = 0;
     steamLevel1 = [];
     steamLevel2 = [];
@@ -400,9 +402,9 @@ function  addThermometer() {
     whiteThermo.rotation.x -= Math.PI/6;
     whiteThermo.rotation.y += Math.PI/6;
 
-    var redThermoGeo = new THREE.CylinderGeometry(0.09, 0.09, 1.87, 32);
+    var redThermoGeo = new THREE.CylinderGeometry(0.09, 0.09, 36*5.2/500, 32);
     redThermo = new THREE.Mesh(redThermoGeo, new THREE.MeshBasicMaterial({color: "#af0b13"}));
-    redThermo.position.y -= (5.2 - 1.87)/2;
+    redThermo.position.y -= (5.2 - 36*5.2/500)/2;
     whiteThermo.add(redThermo);
     PIEaddElement(whiteThermo);
 
@@ -546,6 +548,7 @@ function addElementsToScene () {
     addResistor();
     addThermometer();
     addTable();
+    tempLevelChange(temperature);
 }
 
 function  startAnimation () {
@@ -557,6 +560,7 @@ function  startAnimation () {
     prism2.rotation.z += -Math.PI/8;
     prism2.position.y += +0.25;
 
+    calculateThresholdEnergy();
     startTime = new Date();
     PIEstartAnimation();
 }
@@ -589,7 +593,7 @@ function voltageChange (volt) {
     voltage = volt;
 }
 
-function waterLevelChange (level) {
+function initialWaterLevelChange (level) {
     PIEchangeDisplayCommand("Water level : " + waterLevel + " L", "Water level : " + level + " L", test);
     waterLevel = level;
 
@@ -604,6 +608,22 @@ function waterLevelChange (level) {
 
     PIEstartAnimation();
     PIEstopAnimation();
+}
+
+function waterLevelChange (level) {
+    PIEchangeDisplayCommand("Water level : " + waterLevel + " L", "Water level : " + level + " L", test);
+    waterLevel = level;
+
+    container.remove(water);
+    var waterGeo = new THREE.BoxGeometry (contWidth+0.05, level*contHeight/10, contWidth+0.1);
+    water = new THREE.Mesh (waterGeo, new THREE.MeshBasicMaterial({color: "#266bff"} ));
+    var edges = new  THREE.EdgesGeometry(waterGeo);
+    var line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial( {color: 0x00}));
+    water.add(line);
+    water.position.y -= (contHeight - level*contHeight/10)/2;
+    container.add(water);
+    PIEpauseAnimation();
+    PIEresumeAnimation();
 }
 
 function resistanceChange (resistanceValue) {
@@ -630,23 +650,56 @@ function  tempLevelChange (temp) {
         redThermo = new THREE.Mesh (redThermoGeo, new THREE.MeshBasicMaterial({color: "#af0b13"} ));
         redThermo.position.y -= (5.2 - redHeight)/2;
         whiteThermo.add(redThermo);
-        PIEremoveElement(whiteThermo);
-        PIEaddElement(whiteThermo);
     } else {
         whiteThermo.remove(redThermo);
         redThermoGeo = new THREE.CylinderGeometry(0.09, 0.09, 5.2, 32);
         redThermo = new THREE.Mesh (redThermoGeo, new THREE.MeshBasicMaterial({color: "#af0b13"} ));
         whiteThermo.add(redThermo);
-        PIEremoveElement(whiteThermo);
-        PIEaddElement(whiteThermo);
     }
+}
+
+function initializeInfo () {
+    var infoContent="";
+    infoContent = infoContent + "<h2>Heating Effects of Electric Current - Info</h2>";
+    infoContent = infoContent + "<h3>About the experiment</h3>";
+    infoContent = infoContent + "<p>Shown how the electrical is produced using voltage regulator and a resistor" +
+        " connected together. Also shown how the electrical energy is converted into heat energy in the form of the temperature" +
+        " rise in the water.</p>";
+    infoContent = infoContent + "<p>When the circuit is closed, the resistor in the circuit produces electrical energy. This energy" +
+        " is converted into heat energy and it is radiated in the water. Due to this heat energy being radiated in the water, " +
+        " the temperature of the water rises.</p>";
+    infoContent = infoContent + "<h3>Formulas</h3>";
+    infoContent = infoContent + "<p>Electrical energy = V²/R Joules</p>";
+    infoContent = infoContent + "<p>Heat energy = Electric energy (By law of conservation of energy)</p>";
+    infoContent = infoContent + "<p>q = mc∆t</p>";
+    infoContent = infoContent + "<p>where,</p>";
+    infoContent = infoContent + "<p>q = Heat energy supplied to the system (in Joules)</p>";
+    infoContent = infoContent + "<p>m = mass of the system (in kg)</p>";
+    infoContent = infoContent + "<p>c = specific heat capacity of the system (in J/kg-K) (For water, c = 4180 J/kg-K)</p>";
+    infoContent = infoContent + "<p>∆t = change in temperature of the system (in K or °C)</p>";
+    PIEupdateInfo(infoContent);
+}
+
+function initializeHelp () {
+    var helpContent = "";
+    helpContent = helpContent + "<h2>Heating Effects of Electric Current - Controls</h2>";
+    helpContent = helpContent + "<h3> Controls </h3>";
+    helpContent = helpContent + "<p> The initial values of the voltage, water level, resistance and the room temperature can be " +
+        "changed using the slider on the top right.</p> ";
+    helpContent = helpContent + "<p>The animation can be started either using the start button or the switch" +
+        " on the voltage regulator.</p>";
+    helpContent = helpContent + "<p>After the animation has started, the panel on the top right provides information about the" +
+        " current state of the experiment such as the time elapsed, the current energy and heat energy produced and the current" +
+        " temperature. It also shows the info of the values set initially such as the voltage, water level and resistance.</p>";
+    PIEupdateHelp(helpContent);
 }
 
 function loadExperimentElements () {
 
-    PIEsetExperimentTitle("Heating Calculations of Electric Current");
+    PIEsetExperimentTitle("Heating Effects of Electric Current");
     PIEsetDeveloperName("Sudharsan K A");
-
+    initializeInfo();
+    initializeHelp();
     initializeScene();
     initializeOtherVariables();
     addElementsToScene();
@@ -656,16 +709,15 @@ function loadExperimentElements () {
 
     document.getElementById("start").addEventListener("click", startAnimation);
     document.getElementById("stop").addEventListener("click", stopAnimation  );
-
     PIEaddInputSlider("Voltage: ", 220, voltageChange, 100, 400, 10);
-    PIEaddInputSlider("Water level: ", 3, waterLevelChange, 2, 9, 1);
+    PIEaddInputSlider("Water level: ", 3, initialWaterLevelChange, 2, 9, 1);
     PIEaddInputSlider("Resistance: ", 2, resistanceChange, 1, 10, 1);
     PIEaddInputSlider("Room temp: ", 36, temperatureChange, 30, 46, 1);
     PIEinputGUI.width = 280;
 
     var a = "Voltage : " + voltage + " V";
     var b = "Time : " + time + " secs";
-    var c = "Electric energy : " + electricEnergy/1000 + " kJ";
+    var c = "Elec energy : " + electricEnergy/1000 + " kJ";
     var d = "Heat energy : " + heatEnergy/1000 + " kJ";
     var e = "Temperature : " + temperature + " °C";
     var f = "Water level : " + waterLevel + " L";
@@ -677,7 +729,7 @@ function loadExperimentElements () {
     PIEaddDisplayCommand(c, test);
     PIEaddDisplayCommand(d, test);
     PIEaddDisplayCommand(e, test);
-    PIEdisplayGUI.width = 350;
+    PIEdisplayGUI.width = 365;
     PIErender();
 }
 
@@ -694,8 +746,8 @@ function  updateExperimentElements () {
             tempElectricEnergy = tempElectricEnergy.toFixed(2);
             if (tempElectricEnergy !== electricEnergy) {
                 PIEchangeDisplayCommand("Time : " + time + " secs", "Time : " + difference + " secs", test);
-                PIEchangeDisplayCommand("Electric energy : " + electricEnergy + " kJ",
-                    "Electric energy : " + tempElectricEnergy + " kJ",
+                PIEchangeDisplayCommand("Elec energy : " + electricEnergy + " kJ",
+                    "Elec energy : " + tempElectricEnergy + " kJ",
                     test);
                 PIEchangeDisplayCommand("Heat energy : " + heatEnergy + " kJ",
                     "Heat energy : " + tempElectricEnergy + " kJ",
@@ -709,9 +761,20 @@ function  updateExperimentElements () {
             var newTemp = initialTemperature + tempDiff;
             newTemp = newTemp.toFixed(2);
             tempLevelChange(newTemp);
-            PIEchangeDisplayCommand("Temperature : " + temperature + " °C",
-                                    "Temperature : " + newTemp + " °C",
-                                    test);
+            if (newTemp <= 100) {
+                PIEchangeDisplayCommand("Temperature : " + temperature + " °C",
+                    "Temperature : " + newTemp + " °C",
+                    test);
+            } else {
+                PIEchangeDisplayCommand("Temperature : " + temperature + " °C",
+                    "Temperature : " + 100 + " °C",
+                    test);
+                var levelChange = (heatEnergy-thresholdEnergy) / (2.3 * 1000) / waterLevel;
+                levelChange = waterLevel - levelChange;
+                if (levelChange >= 2) {
+                    waterLevelChange(levelChange);
+                }
+            }
             temperature = newTemp;
 
             if (temperature <= 45 ) {
@@ -754,8 +817,8 @@ function resetExperiment() {
     PIEchangeDisplayCommand("Time : " + time + " secs",
                             "Time : " + 0 + " secs",
                             test);
-    PIEchangeDisplayCommand("Electric energy : " + electricEnergy/1000 + " kJ",
-                            "Electric energy : " + 0 + " kJ",
+    PIEchangeDisplayCommand("Elec energy : " + electricEnergy/1000 + " kJ",
+                            "Elec energy : " + 0 + " kJ",
                             test);
     PIEchangeDisplayCommand("Heat energy : " + heatEnergy + " kJ",
                             "Heat energy : " + 0 + " kJ",
@@ -769,7 +832,12 @@ function resetExperiment() {
     PIEchangeInputSlider("Resistance: ",2);
     PIEchangeInputSlider("Room temp: ",36);
 
-    waterLevelChange(3);
+    initialWaterLevelChange(3);
     tempLevelChange(36);
 
+}
+
+function calculateThresholdEnergy () {
+    var tempDiff = 100 - initialTemperature;
+    thresholdEnergy = 4.18 * tempDiff * initialWaterLevel;
 }
